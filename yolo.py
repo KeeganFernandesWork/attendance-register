@@ -3,7 +3,6 @@ import numpy as np
 model = YOLO("best_attendance.pt")
 def model_yolo(image = "hello.jpg"):
     results = model(image)
-
     labels = {0:"Rahil",1:"Keegan"}
     classes = []
 

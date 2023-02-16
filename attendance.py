@@ -25,7 +25,7 @@ def adding_date(table = "attendance", database = "attendance.db"):
     cur.execute(QUERY)
     con.commit()
 
-def present(names = ["keegan"],total = ["keegan", "rahil"] ,table = "attendance", database = "attendance.db"):
+def present(names = [],total = ["keegan", "rahil"] ,table = "attendance", database = "attendance.db"):
     today = str(date.today()).replace("-","")
     con = sqlite3.connect(database)
     cur = con.cursor()

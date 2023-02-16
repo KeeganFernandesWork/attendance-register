@@ -9,7 +9,7 @@ from datetime import date
 import cv2
 import streamlit as st
 
-st.title("Webcam Live Feed")
+st.title("Attendance App")
 submit = st.button("Capture")
 run = True
 #check = st.button('take attendance')
@@ -25,29 +25,17 @@ if str(date.today()).replace("-","") not in return_columns():
     adding_date()
 
 
-
-FRAME_WINDOW = st.image([])
-camera = cv2.VideoCapture(0)
-
-if not camera.isOpened():
-    print("Cannot open camera")
-
-
-while run:
-    ret, frame = camera.read()
-    if not ret:
-        st.write("Not enough frames")
-        continue
-    if submit:
-        run = False
-    model_yolo(frame)
-    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    FRAME_WINDOW.image(frame)
-
-camera.release()
-cv2.destroyAllWindows()
-
-
+st.image("hello.jpg")
+image = cv2.imread("hello.jpg")
+names = []
+if submit:
+    a = model_yolo(image)
+    for i in a:
+        names.append(i[0])
+    present(names)
+    st.image("./runs/detect/predict/image0.jpg")
+st.write(names)
+    
 
 
 
@@ -55,7 +43,7 @@ cv2.destroyAllWindows()
 df = pd.read_sql_query("SELECT * FROM attendance", con)
 st.dataframe(df)
 
-#present()
+present()
 #show_table()
 
 
