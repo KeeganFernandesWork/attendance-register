@@ -9,4 +9,4 @@ The Attendance Detection Project is highly accurate, making it an ideal solution
 
 We hope you enjoy using the Attendance Detection Project and that it helps make your attendance process more efficient and accurate. If you have any questions or feedback, please feel free to contact us. Thank you for choosing the Attendance Detection Project!
 
-![](results.png)
+![alt text](result.png)
