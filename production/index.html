@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Real-time Object Detection</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1>Real-time Object Detection</h1>
+        <form action="{{ url_for('process_image') }}" method="POST" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*">
+            <br>
+            <input type="submit" value="Upload and Process">
+        </form>
+        <br>
+        <button onclick="processVideo()">Process Video Feed</button>
+        <br>
+        <br>
+        <video id="video" width="640" height="480"></video>
+        <script>
+            function processVideo() {
+                navigator.mediaDevices.getUserMedia({video: true})
+                    .then(function(stream) {
+                        var video = document.getElementById('video');
+                        video.srcObject = stream;
+                        video.play();
+
+                        var canvas = document.createElement('canvas');
+                        canvas.width = 640;
+                        canvas.height = 480;
+                        var ctx = canvas.getContext('2d');
+
+                        setInterval(function() {
+                            ctx.drawImage(video, 0, 0, 640, 480);
+                            var dataURI = canvas.toDataURL('image/jpeg', 1.0);
+                            $.ajax({
+                                url: '{{ url_for('process_image') }}',
+                                type: 'POST',
+                                data: {'image': dataURI},
+                                success: function(response) {
+                                    $('#video').after(response);
+                                }
+                            });
+                        }, 100);
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            }
+        </script>
+    </body>
+</html>
